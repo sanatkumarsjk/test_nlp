@@ -14,6 +14,7 @@ def word_tokenize(tokens):
 
 class SQuAD():
     def __init__(self, args):
+        nltk.download('punkt')
         path = '.data/squad'
         dataset_path = path + '/torchtext/'
         train_examples_path = dataset_path + 'train_examples.pt'

@@ -1,0 +1,2 @@
+Env:
+source env/bin/activate
