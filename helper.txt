@@ -1,2 +1,6 @@
 Env:
 source env/bin/activate
+
+run
+
+python run.py --dev-batch-size 10 --train-batch-size 10

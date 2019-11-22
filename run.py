@@ -141,7 +141,7 @@ def main():
     parser.add_argument('--word-dim', default=100, type=int)
     args = parser.parse_args()
 
-    print('loading SQuAD data...') 
+    print('loading SQuAD data...')
     data = SQuAD(args)
     setattr(args, 'char_vocab_size', len(data.CHAR.vocab))
     setattr(args, 'word_vocab_size', len(data.WORD.vocab))
