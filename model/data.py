@@ -44,6 +44,8 @@ class SQuAD():
                        ('c_word', self.WORD), ('c_char', self.CHAR),
                        ('q_word', self.WORD), ('q_char', self.CHAR)]
 
+
+        # dataset path, dataset enters here ftom dataset path
         if os.path.exists(dataset_path):
             print("loading splits...")
             train_examples = torch.load(train_examples_path)
