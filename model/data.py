@@ -3,6 +3,10 @@ import os
 import nltk
 import torch
 
+from nltk.corpus import stopwords 
+from nltk.tokenize import word_tokenize
+import string
+
 from torchtext import data
 from torchtext import datasets
 from torchtext.vocab import GloVe
@@ -99,8 +103,26 @@ class SQuAD():
                         question = qa['question']
                         for ans in qa['answers']:
                             answer = ans['text']
-                            s_idx = ans['answer_start']
-                            e_idx = s_idx + len(answer)
+
+                            ############## jk
+                            word_tokens = word_tokenize(answer)
+                            # filtered_sentence = [w for w in word_tokens if not w in stop_words] 
+                            word_tokens = list(filter(lambda token: token not in string.punctuation, word_tokens))
+  
+                            filtered_sentence = [] 
+                            
+                            for w in word_tokens: 
+                                if w not in stop_words: 
+                                    filtered_sentence.append(w) 
+
+                            gt = []
+                            for i in filtered_sentence:
+                                gt.append(tokens.index(i))
+
+                            ##################jk
+
+                            # s_idx = ans['answer_start']
+                            # e_idx = s_idx + len(answer)
 
                             l = 0
                             s_found = False
@@ -117,19 +139,20 @@ class SQuAD():
                                     t = '\'\''
 
                                 l += len(t)
-                                if l > s_idx and s_found == False:
-                                    s_idx = i
-                                    s_found = True
-                                if l >= e_idx:
-                                    e_idx = i
-                                    break
+                                # if l > s_idx and s_found == False:
+                                #     s_idx = i
+                                #     s_found = True
+                                # if l >= e_idx:
+                                #     e_idx = i
+                                #     break
 
                             dump.append(dict([('id', id),
                                               ('context', context),
                                               ('question', question),
                                               ('answer', answer),
-                                              ('s_idx', s_idx),
-                                              ('e_idx', e_idx)]))
+                                              ('s_idx', gt),                        ############# jk
+                                              ('e_idx', gt)]))                      ############# jk
+
 
         with open(f'{path}l', 'w', encoding='utf-8') as f:
             for line in dump:
