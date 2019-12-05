@@ -23,7 +23,7 @@ def train(args, data):
             ema.register(name, param.data)
     parameters = filter(lambda p: p.requires_grad, model.parameters())
     optimizer = optim.Adadelta(parameters, lr=args.learning_rate)
-    criterion = nn.CrossEntropyLoss()
+    criterion = nn.BCEWithLogitsLoss() # CrossEntropyLoss()
 
     writer = SummaryWriter(log_dir='runs/' + args.model_time)
 
@@ -43,11 +43,9 @@ def train(args, data):
         last_epoch = present_epoch
 
         p1, p2 = model(batch)
-        print(p1.size(), p2.size(), "size of the p1 and p2 vectors")
-        print(batch.s_idx, batch.e_idx, " GT -----------------------------------------------------------------------")
-        print(p1,p2)
+    
         optimizer.zero_grad()
-        batch_loss = criterion(p1, batch.s_idx) + criterion(p2, batch.e_idx)
+        batch_loss = criterion(p1, batch.s_idx[0]) + criterion(p2, batch.e_idx)
         loss += batch_loss.item()
         batch_loss.backward()
         optimizer.step()
