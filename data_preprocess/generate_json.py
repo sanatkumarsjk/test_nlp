@@ -54,8 +54,8 @@ def format_json(sum_file, qaps_file, op_file):
         temp_data["paragraphs"] = paragraphs
         data.append(temp_data)
         # uncomment this and replace 100 with number of samples required.
-        # if len(data) >= 100:
-        #     break
+        if len(data) >= 5:
+            break
 
     op["data"] = data
     with open(op_file, 'w') as f:

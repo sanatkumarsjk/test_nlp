@@ -14,7 +14,6 @@ import evaluate
 
 def train(args, data):
     device = torch.device(f"cuda:{args.gpu}" if torch.cuda.is_available() else "cpu")
-    print(device)
     model = BiDAF(args, data.WORD.vocab.vectors).to(device)
 
     ema = EMA(args.exp_decay_rate)
@@ -23,7 +22,7 @@ def train(args, data):
             ema.register(name, param.data)
     parameters = filter(lambda p: p.requires_grad, model.parameters())
     optimizer = optim.Adadelta(parameters, lr=args.learning_rate)
-    criterion = nn.BCEWithLogitsLoss() # CrossEntropyLoss()
+    criterion = nn.CrossEntropyLoss()
 
     writer = SummaryWriter(log_dir='runs/' + args.model_time)
 
@@ -32,9 +31,7 @@ def train(args, data):
     max_dev_exact, max_dev_f1 = -1, -1
 
     iterator = data.train_iter
-    print('before for-----------------', iterator)
     for i, batch in enumerate(iterator):
-        print(i, 'inside the for loop')
         present_epoch = int(iterator.epoch)
         if present_epoch == args.epoch:
             break
@@ -43,9 +40,9 @@ def train(args, data):
         last_epoch = present_epoch
 
         p1, p2 = model(batch)
-    
+
         optimizer.zero_grad()
-        batch_loss = criterion(p1, batch.s_idx[0]) + criterion(p2, batch.e_idx)
+        batch_loss = criterion(p1, batch.s_idx) + criterion(p2, batch.e_idx)
         loss += batch_loss.item()
         batch_loss.backward()
         optimizer.step()
@@ -53,9 +50,8 @@ def train(args, data):
         for name, param in model.named_parameters():
             if param.requires_grad:
                 ema.update(name, param.data)
-        
-        #if (i + 1) % args.print_freq == 0:
-        if True: 
+
+        if (i + 1) % args.print_freq == 0:
             dev_loss, dev_exact, dev_f1 = test(model, ema, args, data)
             c = (i + 1) // args.print_freq
 
@@ -145,7 +141,7 @@ def main():
     parser.add_argument('--word-dim', default=100, type=int)
     args = parser.parse_args()
 
-    print('loading SQuAD data...') 
+    print('loading SQuAD data...')
     data = SQuAD(args)
     setattr(args, 'char_vocab_size', len(data.CHAR.vocab))
     setattr(args, 'word_vocab_size', len(data.WORD.vocab))

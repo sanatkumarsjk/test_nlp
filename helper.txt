@@ -1,6 +1,6 @@
 Env:
 source env/bin/activate
 
-run
+run with custom files
+python run.py --train-file train.json --dev-file dev.json --train-batch-size 10 --dev-batch-size 10
 
-python run.py --dev-batch-size 10 --train-batch-size 10
