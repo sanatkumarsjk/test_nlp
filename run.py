@@ -39,9 +39,9 @@ def train(args, data):
         if present_epoch > last_epoch:
             print('epoch:', present_epoch + 1)
         last_epoch = present_epoch
-        print('----------------Calling model-----------------\n\n')
+        print('----------------Calling model---\n\n', 'iteration and epoch number', i, present_epoch)
         p1, p2 = model(batch)
-        print(p1,p2)
+        #print(p1,p2)
         optimizer.zero_grad()
         batch_loss = criterion(p1, batch.s_idx) + criterion(p2, batch.e_idx)
         loss += batch_loss.item()
@@ -53,6 +53,9 @@ def train(args, data):
                 ema.update(name, param.data)
         # sk for saving model irrespective of its performance.
         best_model = copy.deepcopy(model)
+        loss = 0
+        model.train()
+        break
 
         # if (i + 1) % args.print_freq == 0 or True:
         #     dev_loss, dev_exact, dev_f1 = test(model, ema, args, data)
@@ -72,7 +75,8 @@ def train(args, data):
         #
         #     loss = 0
         #     model.train()
-
+        
+        
     writer.close()
     print(f'max dev EM: {max_dev_exact:.3f} / max dev F1: {max_dev_f1:.3f}')
 
