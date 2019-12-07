@@ -6,6 +6,11 @@ import torch
 from torchtext import data
 from torchtext import datasets
 from torchtext.vocab import GloVe
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+import string
+
+
 
 
 def word_tokenize(tokens):
@@ -97,6 +102,25 @@ class SQuAD():
                         question = qa['question']
                         for ans in qa['answers']:
                             answer = ans['text']
+
+                            ############## jk
+                            word_tokens = word_tokenize(answer)
+                            # filtered_sentence = [w for w in word_tokens if not w in stop_words]
+                            word_tokens = list(filter(lambda token: token not in string.punctuation, word_tokens))
+
+                            filtered_sentence = []
+                            stop_words = set(stopwords.words('english'))
+                            for w in word_tokens:
+                                if w not in stop_words:
+                                    filtered_sentence.append(w)
+
+                            gt = []
+                            for i in filtered_sentence:
+                                gt.append(tokens.index(i))
+
+                            ##################jk
+
+
                             s_idx = ans['answer_start']
                             e_idx = s_idx + len(answer)
 
@@ -126,8 +150,8 @@ class SQuAD():
                                               ('context', context),
                                               ('question', question),
                                               ('answer', answer),
-                                              ('s_idx', s_idx),
-                                              ('e_idx', e_idx)]))
+                                              ('s_idx', gt[0]),
+                                              ('e_idx', gt[1])]))
 
         with open(f'{path}l', 'w', encoding='utf-8') as f:
             for line in dump:
