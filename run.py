@@ -51,25 +51,27 @@ def train(args, data):
         for name, param in model.named_parameters():
             if param.requires_grad:
                 ema.update(name, param.data)
+        # sk for saving model irrespective of its performance.
+        best_model = copy.deepcopy(model)
 
-        if (i + 1) % args.print_freq == 0 or True:
-            dev_loss, dev_exact, dev_f1 = test(model, ema, args, data)
-            c = (i + 1) // args.print_freq
-
-            writer.add_scalar('loss/train', loss, c)
-            writer.add_scalar('loss/dev', dev_loss, c)
-            writer.add_scalar('exact_match/dev', dev_exact, c)
-            writer.add_scalar('f1/dev', dev_f1, c)
-            print(f'train loss: {loss:.3f} / dev loss: {dev_loss:.3f}'
-                  f' / dev EM: {dev_exact:.3f} / dev F1: {dev_f1:.3f}')
-
-            if dev_f1 > max_dev_f1:
-                max_dev_f1 = dev_f1
-                max_dev_exact = dev_exact
-                best_model = copy.deepcopy(model)
-
-            loss = 0
-            model.train()
+        # if (i + 1) % args.print_freq == 0 or True:
+        #     dev_loss, dev_exact, dev_f1 = test(model, ema, args, data)
+        #     c = (i + 1) // args.print_freq
+        #
+        #     writer.add_scalar('loss/train', loss, c)
+        #     writer.add_scalar('loss/dev', dev_loss, c)
+        #     writer.add_scalar('exact_match/dev', dev_exact, c)
+        #     writer.add_scalar('f1/dev', dev_f1, c)
+        #     print(f'train loss: {loss:.3f} / dev loss: {dev_loss:.3f}'
+        #           f' / dev EM: {dev_exact:.3f} / dev F1: {dev_f1:.3f}')
+        #
+        #     if dev_f1 > max_dev_f1:
+        #         max_dev_f1 = dev_f1
+        #         max_dev_exact = dev_exact
+        #         best_model = copy.deepcopy(model)
+        #
+        #     loss = 0
+        #     model.train()
 
     writer.close()
     print(f'max dev EM: {max_dev_exact:.3f} / max dev F1: {max_dev_f1:.3f}')
