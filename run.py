@@ -14,6 +14,7 @@ import evaluate
 
 def train(args, data):
     device = torch.device(f"cuda:{args.gpu}" if torch.cuda.is_available() else "cpu")
+    print("Treining using the", device)
     model = BiDAF(args, data.WORD.vocab.vectors).to(device)
 
     ema = EMA(args.exp_decay_rate)
@@ -38,9 +39,9 @@ def train(args, data):
         if present_epoch > last_epoch:
             print('epoch:', present_epoch + 1)
         last_epoch = present_epoch
-
+        print('----------------Calling model-----------------\n\n')
         p1, p2 = model(batch)
-
+        print(p1,p2)
         optimizer.zero_grad()
         batch_loss = criterion(p1, batch.s_idx) + criterion(p2, batch.e_idx)
         loss += batch_loss.item()
@@ -51,7 +52,7 @@ def train(args, data):
             if param.requires_grad:
                 ema.update(name, param.data)
 
-        if (i + 1) % args.print_freq == 0:
+        if (i + 1) % args.print_freq == 0 or True:
             dev_loss, dev_exact, dev_f1 = test(model, ema, args, data)
             c = (i + 1) // args.print_freq
 
