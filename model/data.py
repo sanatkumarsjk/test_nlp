@@ -20,6 +20,7 @@ def word_tokenize(tokens):
 class SQuAD():
     def __init__(self, args):
         nltk.download('punkt')
+        nltk.download('stopwords')
         path = '.data/squad'
         dataset_path = path + '/torchtext/'
         train_examples_path = dataset_path + 'train_examples.pt'
@@ -96,7 +97,7 @@ class SQuAD():
             for article in data:
                 for paragraph in article['paragraphs']:
                     context = paragraph['context']
-                    tokens = word_tokenize(context)
+                    tokens = word_tokenize(context.lower())
                     for qa in paragraph['qas']:
                         id = qa['id']
                         question = qa['question']
@@ -104,7 +105,7 @@ class SQuAD():
                             answer = ans['text']
 
                             ############## jk
-                            word_tokens = word_tokenize(answer)
+                            word_tokens = word_tokenize(answer.lower())
                             # filtered_sentence = [w for w in word_tokens if not w in stop_words]
                             word_tokens = list(filter(lambda token: token not in string.punctuation, word_tokens))
 
@@ -116,7 +117,16 @@ class SQuAD():
 
                             gt = []
                             for i in filtered_sentence:
-                                gt.append(tokens.index(i))
+                                try:
+                                    gt.append(tokens.index(i))
+                                except:
+                                    print(i)
+                                    pass
+                            if len(gt) == 0:
+                                print("bogus data found")
+                                gt = [0,0]
+                            else:
+                                print("normal data found-----------------------------")
 
                             ##################jk
 
@@ -150,8 +160,8 @@ class SQuAD():
                                               ('context', context),
                                               ('question', question),
                                               ('answer', answer),
-                                              ('s_idx', gt[0]),
-                                              ('e_idx', gt[1])]))
+                                              ('s_idx', 2 ),
+                                              ('e_idx', 3 )]))
 
         with open(f'{path}l', 'w', encoding='utf-8') as f:
             for line in dump:

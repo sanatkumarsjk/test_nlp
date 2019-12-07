@@ -14,7 +14,8 @@ import evaluate
 
 def train(args, data):
     device = torch.device(f"cuda:{args.gpu}" if torch.cuda.is_available() else "cpu")
-    print("Treining using the", device)
+    #device = "cpu"
+    print("Training using the", device)
     model = BiDAF(args, data.WORD.vocab.vectors).to(device)
 
     ema = EMA(args.exp_decay_rate)
@@ -75,8 +76,9 @@ def train(args, data):
         #
         #     loss = 0
         #     model.train()
-        
-        
+    #sk
+    dev_loss, dev_exact, dev_f1 = test(model, ema, args, data)
+    print(dev_loss, dev_exact, dev_f1)
     writer.close()
     print(f'max dev EM: {max_dev_exact:.3f} / max dev F1: {max_dev_f1:.3f}')
 
@@ -84,7 +86,9 @@ def train(args, data):
 
 
 def test(model, ema, args, data):
+    #torch.cuda.empty_cache()
     device = torch.device(f"cuda:{args.gpu}" if torch.cuda.is_available() else "cpu")
+    #device =  "cpu"
     criterion = nn.CrossEntropyLoss()
     loss = 0
     answers = dict()
