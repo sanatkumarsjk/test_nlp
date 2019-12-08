@@ -15,23 +15,17 @@ import torch.nn.functional as F
 import numpy as np
 
 def myLossFunction(pred_prob, gt_prob):
-
+    #padding
+    maxlen = len(max(gt_prob, key=len))
+    for i in range(len(gt_prob)):
+        while len(gt_prob[i]) < maxlen:
+            gt_prob[i].append(0)
+    gt_prob = torch.FloatTensor(gt_prob)
     diff = pred_prob - gt_prob
-    return torch.sqrt(torch.mean(diff))
+    loss = torch.sqrt(torch.mean(diff))
+    print("loss", loss)
+    return loss
 
-    # pred = np.random.random((10,10))
-    # pred_pt = torch.from_numpy(pred)
-    # pred_sm = F.softmax(pred_pt, dim=1)
-    # values, indices = pred_sm.max(1)
-    #
-    # gt = np.arange()
-    # # log_prob = -1.0 * F.log_softmax(pred_prob, 1)
-    # loss = pred_prob.gather(1, gt_indexes.unsqueeze(1))
-    # loss = loss.mean()
-    # return loss
-    # print (pred, gt)
-
-    return 9.2
 
 def train(args, data):
     device = torch.device(f"cuda:{args.gpu}" if torch.cuda.is_available() else "cpu")
@@ -55,6 +49,7 @@ def train(args, data):
 
     iterator = data.train_iter
     for i, batch in enumerate(iterator):
+
         print("Inside the for loop")
         present_epoch = int(iterator.epoch)
         if present_epoch == args.epoch:
@@ -131,9 +126,9 @@ def test(model, ema, args, data):
 
     with torch.set_grad_enabled(False):
         for batch in iter(data.dev_iter):
-            print(batch, '\n\n\n')
+            # print(batch, '\n\n\n')
             p1, p2 = model(batch)
-            batch_loss = criterion(p1, batch.f_idx) + criterion(p1, batch.se_idx) + criterion(p1, batch.t_idx) + criterion(p1, batch.fo_idx) + criterion(p1, batch.fi_idx)
+            batch_loss = myLossFunction(p1, batch.f_idx) # + criterion(p1, batch.se_idx) + criterion(p1, batch.t_idx) + criterion(p1, batch.fo_idx) + criterion(p1, batch.fi_idx)
 
             # batch_loss = criterion(p1, batch.s_idx) + criterion(p2, batch.e_idx)
             loss += batch_loss.item()

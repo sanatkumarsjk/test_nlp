@@ -11,8 +11,6 @@ from nltk.tokenize import word_tokenize
 import string
 
 
-
-
 def word_tokenize(tokens):
     return [token.replace("''", '"').replace("``", '"') for token in nltk.word_tokenize(tokens)]
 
@@ -122,7 +120,7 @@ class SQuAD():
                                     filtered_sentence.append(w)
 
                             # distributing probability to all gt values
-                            prob = 1/filtered_sentence
+                            prob = 1/max(1, len(filtered_sentence))
                             gt = [0]*len(tokens)
                             for i in filtered_sentence:
                                 try:
