@@ -94,6 +94,7 @@ class SQuAD():
             data = json.load(f)
             data = data['data']
 
+            counter = 0                                                            #jk
             for article in data:
                 for paragraph in article['paragraphs']:
                     context = paragraph['context']
@@ -155,13 +156,25 @@ class SQuAD():
                                 if l >= e_idx:
                                     e_idx = i
                                     break
+                            if len(gt) >=5 :
+                                dump.append(dict([('id', id),
+                                                ('context', context),
+                                                ('question', question),
+                                                ('answer', answer),
+                                                ('f_idx', gt[0] ),                   #jk
+                                                ('se_idx', gt[1] ),                   #jk
+                                                ('t_idx', gt[2] ),                    #jk
+                                                ('fo_idx', gt[3] ),                   #jk
+                                                ('fi_idx', gt[4] )]))                 #jk
+                            else:
+                                print("skipping", gt)                                #jk
+                                counter += 1                                         #jk
 
-                            dump.append(dict([('id', id),
-                                              ('context', context),
-                                              ('question', question),
-                                              ('answer', answer),
-                                              ('s_idx', 2 ),
-                                              ('e_idx', 3 )]))
+        print(counter, "QAs skipped because gt < 5")                                 #jk
+
+
+
+
 
         with open(f'{path}l', 'w', encoding='utf-8') as f:
             for line in dump:
