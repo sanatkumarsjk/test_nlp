@@ -20,11 +20,11 @@ def myLossFunction(pred_prob, gt_prob):
     for i in range(len(gt_prob)):
         while len(gt_prob[i]) < maxlen:
             gt_prob[i].append(0)
-    gt_prob = torch.FloatTensor(gt_prob)
-    diff = pred_prob - gt_prob
+    gt_prob = torch.cuda.FloatTensor(gt_prob)
+    diff = abs(pred_prob - gt_prob)
     loss = torch.sqrt(torch.mean(diff))
-    print("loss", loss)
-    return loss
+    print("loss", loss, diff)
+    return diff
 
 
 def train(args, data):
@@ -80,7 +80,7 @@ def train(args, data):
         best_model = copy.deepcopy(model)
         loss = 0
         model.train()
-        break
+        #break
 
         # if (i + 1) % args.print_freq == 0 or True:
         #     dev_loss, dev_exact, dev_f1 = test(model, ema, args, data)
@@ -101,8 +101,8 @@ def train(args, data):
         #     loss = 0
         #     model.train()
     #sk
-    dev_loss, dev_exact, dev_f1 = test(model, ema, args, data)
-    print(dev_loss, dev_exact, dev_f1)
+    #dev_loss, dev_exact, dev_f1 = test(model, ema, args, data)
+    #print(dev_loss, dev_exact, dev_f1)
     writer.close()
     print(f'max dev EM: {max_dev_exact:.3f} / max dev F1: {max_dev_f1:.3f}')
 
