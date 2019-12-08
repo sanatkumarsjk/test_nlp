@@ -13,6 +13,9 @@ from model.ema import EMA
 import evaluate
 
 
+def loss(pred, gt):
+    return 9.2
+
 def train(args, data):
     device = torch.device(f"cuda:{args.gpu}" if torch.cuda.is_available() else "cpu")
     #device = "cpu"
@@ -50,7 +53,7 @@ def train(args, data):
         optimizer.zero_grad()
         for i in batch.f_idx:
             print(i)
-            batch_loss = criterion(p1, batch.s_idx) # + criterion(p1, batch.se_idx) + criterion(p2, batch.t_idx) + criterion(p1, batch.fo_idx) + criterion(p1, batch.fi_idx)
+            batch_loss = loss(p1, batch.f_idx) #criterion(p1, batch.s_idx) # + criterion(p1, batch.se_idx) + criterion(p2, batch.t_idx) + criterion(p1, batch.fo_idx) + criterion(p1, batch.fi_idx)
     
         loss += batch_loss.item()
         batch_loss.backward()

@@ -16,5 +16,4 @@ python generate_json.py
 mv data/json/*.* ../.data/squad/
 cd ..
 
-python run.py --train-file test.json --dev-file test.json --train-batch-size 10 --dev-batch-size 10
-
+python run.py --train-file test.json --dev-file dev.json --train-batch-size 100 --dev-batch-size 100
