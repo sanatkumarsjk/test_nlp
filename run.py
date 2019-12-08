@@ -20,11 +20,31 @@ def myLossFunction(pred_prob, gt_prob):
     for i in range(len(gt_prob)):
         while len(gt_prob[i]) < maxlen:
             gt_prob[i].append(0)
-    gt_prob = torch.cuda.FloatTensor(gt_prob)
-    diff = abs(pred_prob - gt_prob)
+    # gt_prob = torch.cuda.FloatTensor(gt_prob)
+    gt_prob = torch.FloatTensor(gt_prob)
+    print(pred_prob.shape, gt_prob.shape)
+    print("-======================")
+    print(gt_prob)
+    print("-======================")
+    # f = gt_prob > 0
+    # print(f.tolist())
+    diff = []
+    for index,pp in enumerate(pred_prob):
+        d = []
+        for idx, p in enumerate(pp):
+            g = gt_prob[index][idx]
+            if g != 0:
+                d.append(abs(p - g))
+            # else:
+            #     d.append(0)
+        diff.append(sum(d))
+    print(diff)
+    diff = torch.tensor(diff, requires_grad = True)
+
+    # diff = abs(pred_prob - gt_prob)
     loss = torch.sqrt(torch.mean(diff))
-    print("loss", loss, diff)
-    return diff
+    print("loss", loss)
+    return loss
 
 
 def train(args, data):
@@ -69,7 +89,7 @@ def train(args, data):
         #     print(i)
         batch_loss = myLossFunction(p1, batch.f_idx) #criterion(p1, batch.s_idx) # + criterion(p1, batch.se_idx) + criterion(p2, batch.t_idx) + criterion(p1, batch.fo_idx) + criterion(p1, batch.fi_idx)
     
-        loss += batch_loss.item()
+        # loss += batch_loss.item()
         batch_loss.backward()
         optimizer.step()
 
