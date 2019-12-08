@@ -1,5 +1,6 @@
 import argparse
 import copy, json, os
+import numpy as np
 
 import torch
 from torch import nn, optim
@@ -24,7 +25,7 @@ def train(args, data):
             ema.register(name, param.data)
     parameters = filter(lambda p: p.requires_grad, model.parameters())
     optimizer = optim.Adadelta(parameters, lr=args.learning_rate)
-    criterion = nn.CrossEntropyLoss()
+    criterion = nn.BCEWithLogitsLoss()
 
     writer = SummaryWriter(log_dir='runs/' + args.model_time)
 
@@ -34,17 +35,23 @@ def train(args, data):
 
     iterator = data.train_iter
     for i, batch in enumerate(iterator):
+        print("Inside the for loop")
         present_epoch = int(iterator.epoch)
         if present_epoch == args.epoch:
             break
         if present_epoch > last_epoch:
             print('epoch:', present_epoch + 1)
         last_epoch = present_epoch
+      
         print('----------------Calling model---\n\n', 'iteration and epoch number', i, present_epoch)
+        #print(batch)
         p1, p2 = model(batch)
         #print(p1,p2)
         optimizer.zero_grad()
-        batch_loss = criterion(p1, batch.f_idx) + criterion(p1, batch.se_idx) + criterion(p2, batch.t_idx) + criterion(p1, batch.fo_idx) + criterion(p1, batch.fi_idx)
+        for i in batch.f_idx:
+            print(i)
+            batch_loss = criterion(p1, batch.s_idx) # + criterion(p1, batch.se_idx) + criterion(p2, batch.t_idx) + criterion(p1, batch.fo_idx) + criterion(p1, batch.fi_idx)
+    
         loss += batch_loss.item()
         batch_loss.backward()
         optimizer.step()
@@ -102,6 +109,7 @@ def test(model, ema, args, data):
 
     with torch.set_grad_enabled(False):
         for batch in iter(data.dev_iter):
+            print(batch, '\n\n\n')
             p1, p2 = model(batch)
             batch_loss = criterion(p1, batch.f_idx) + criterion(p1, batch.se_idx) + criterion(p1, batch.t_idx) + criterion(p1, batch.fo_idx) + criterion(p1, batch.fi_idx)
 
@@ -131,7 +139,7 @@ def test(model, ema, args, data):
     #     print(json.dumps(answers), file=f)
 
     # results = evaluate.main(args)
-    return loss#, results['exact_match'], results['f1']
+    return loss,0,0 #, results['exact_match'], results['f1']
 
 
 def main():

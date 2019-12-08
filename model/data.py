@@ -41,7 +41,7 @@ class SQuAD():
         self.LABEL = data.Field(sequential=False, unk_token=None, use_vocab=False)
 
         dict_fields = {'id': ('id', self.RAW),
-                       'f_idx': ('f_idx', self.LABEL),
+                       'f_idx': ('f_idx', self.RAW),
                        'se_idx': ('se_idx', self.LABEL),
                        't_idx': ('t_idx', self.LABEL),
                        'fo_idx': ('fo_idx', self.LABEL),
@@ -49,7 +49,7 @@ class SQuAD():
                        'context': [('c_word', self.WORD), ('c_char', self.CHAR)],
                        'question': [('q_word', self.WORD), ('q_char', self.CHAR)]}
 
-        list_fields = [('id', self.RAW), ('s_idx', self.LABEL), ('e_idx', self.LABEL),
+        list_fields = [('id', self.RAW), ('f_idx', self.LABEL), ('se_idx', self.LABEL),('t_idx', self.LABEL), ('fo_idx', self.LABEL),('fi_idx', self.LABEL),
                        ('c_word', self.WORD), ('c_char', self.CHAR),
                        ('q_word', self.WORD), ('q_char', self.CHAR)]
 
@@ -98,6 +98,7 @@ class SQuAD():
             data = data['data']
 
             counter = 0                                                            #jk
+            total = 0
             for article in data:
                 for paragraph in article['paragraphs']:
                     context = paragraph['context']
@@ -106,6 +107,7 @@ class SQuAD():
                         id = qa['id']
                         question = qa['question']
                         for ans in qa['answers']:
+                            total += 1
                             answer = ans['text']
 
                             ############## jk
@@ -124,13 +126,14 @@ class SQuAD():
                                 try:
                                     gt.append(tokens.index(i))
                                 except:
-                                    print(i)
+                                   # print(i)
                                     pass
-                            if len(gt) == 0:
-                                print("bogus data found")
-                                gt = [0,0]
+                            if len(gt) == 2:
+                               # print("bogus data found")
+                                gt += [0,0]
                             else:
-                                print("normal data found-----------------------------")
+                                pass
+                               # print("normal data found-----------------------------")
 
                             ##################jk
 
@@ -159,21 +162,21 @@ class SQuAD():
                                 if l >= e_idx:
                                     e_idx = i
                                     break
-                            if len(gt) >=5 :
+                            if len(gt) > 1:
                                 dump.append(dict([('id', id),
                                                 ('context', context),
                                                 ('question', question),
                                                 ('answer', answer),
-                                                ('f_idx', gt[0] ),                   #jk
-                                                ('se_idx', gt[1] ),                   #jk
-                                                ('t_idx', gt[2] ),                    #jk
-                                                ('fo_idx', gt[3] ),                   #jk
-                                                ('fi_idx', gt[4] )]))                 #jk
+                                                ('f_idx', gt),                   #jk
+                                                ('se_idx', gt[0] ),                   #jk
+                                                ('t_idx', gt[1] ),                    #jk
+                                                ('fo_idx', gt[0] ),                   #jk
+                                                ('fi_idx', gt[0] )]))                 #jk
                             else:
-                                print("skipping", gt)                                #jk
+                                #print("skipping", gt)                                #jk
                                 counter += 1                                         #jk
 
-        print(counter, "QAs skipped because gt < 5")                                 #jk
+        print(counter, "QAs skipped because gt < 5:", total)                                 #jk
 
 
 
