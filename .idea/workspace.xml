@@ -4,7 +4,7 @@
     <list default="true" id="82a31b74-859b-4791-acd7-bd364d15f320" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/helper.txt" beforeDir="false" afterPath="$PROJECT_DIR$/helper.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/data.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,20 +35,20 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="370" />
-          <entry key="txt" value="137" />
+          <entry key="py" value="483" />
+          <entry key="txt" value="196" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="137" />
-          <entry key="Python" value="370" />
+          <entry key="PLAIN_TEXT" value="196" />
+          <entry key="Python" value="483" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="json" value="5" />
-          <entry key="py" value="10" />
+          <entry key="py" value="11" />
           <entry key="txt" value="2" />
         </counts>
       </usages-collector>
@@ -57,7 +57,7 @@
           <entry key="JSON" value="1" />
           <entry key="JSON5" value="4" />
           <entry key="PLAIN_TEXT" value="2" />
-          <entry key="Python" value="10" />
+          <entry key="Python" value="11" />
         </counts>
       </usages-collector>
     </session>
@@ -79,7 +79,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/model/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
+            <state relative-caret-position="142">
               <caret line="86" column="43" selection-start-line="86" selection-start-column="43" selection-end-line="86" selection-end-column="43" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
@@ -88,11 +88,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/model/data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="111" column="72" lean-forward="true" selection-start-line="111" selection-start-column="72" selection-end-line="111" selection-end-column="72" />
+            <state relative-caret-position="366">
+              <caret line="171" lean-forward="true" selection-start-line="171" selection-end-line="171" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -100,11 +100,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/run.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="59" column="42" selection-start-line="59" selection-start-column="42" selection-end-line="59" selection-end-column="42" />
+            <state relative-caret-position="203">
+              <caret line="105" column="27" lean-forward="true" selection-start-line="105" selection-start-column="27" selection-end-line="105" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/json/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="226">
+              <caret line="182" column="4" selection-start-line="182" selection-start-column="4" selection-end-line="182" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -112,8 +121,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/helper.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="49" selection-start-line="4" selection-end-line="5" />
+            <state relative-caret-position="153">
+              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="18" selection-end-column="99" />
             </state>
           </provider>
         </entry>
@@ -138,6 +147,8 @@
       <find>train_file</find>
       <find>rain-file</find>
       <find>criterion</find>
+      <find>device</find>
+      <find>s_idx</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -150,9 +161,9 @@
         <option value="$PROJECT_DIR$/data_preprocess/data.py" />
         <option value="$PROJECT_DIR$/data_preprocess/split_train_dev_test.py" />
         <option value="$PROJECT_DIR$/data_preprocess/generate_json.py" />
+        <option value="$PROJECT_DIR$/model/data.py" />
         <option value="$PROJECT_DIR$/helper.txt" />
         <option value="$PROJECT_DIR$/run.py" />
-        <option value="$PROJECT_DIR$/model/data.py" />
       </list>
     </option>
   </component>
@@ -172,6 +183,16 @@
             <path>
               <item name="test_nlp" type="b2602c69:ProjectViewProjectNode" />
               <item name="test_nlp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="test_nlp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="test_nlp" type="462c0819:PsiDirectoryNode" />
+              <item name=".data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="test_nlp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="test_nlp" type="462c0819:PsiDirectoryNode" />
+              <item name="data_preprocess" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -203,7 +224,7 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="UPDATED" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/run.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/model/data.py</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Created" />
@@ -350,7 +371,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575743087852</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="updated data.py with gt values">
+      <created>1575756911044</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1575756911044</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -384,7 +412,8 @@
     <MESSAGE value="punkt added" />
     <MESSAGE value="Rebasing code to original form." />
     <MESSAGE value="saving model at each iterations." />
-    <option name="LAST_COMMIT_MESSAGE" value="saving model at each iterations." />
+    <MESSAGE value="updated data.py with gt values" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated data.py with gt values" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/.data/squad/dev-v1.1.json">
@@ -418,16 +447,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/helper.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="49" selection-start-line="4" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
+        <state relative-caret-position="142">
           <caret line="86" column="43" selection-start-line="86" selection-start-column="43" selection-end-line="86" selection-end-column="43" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
@@ -435,20 +457,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/run.py">
+    <entry file="file://$PROJECT_DIR$/helper.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="59" column="42" selection-start-line="59" selection-start-column="42" selection-end-line="59" selection-end-column="42" />
+        <state relative-caret-position="153">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="18" selection-end-column="99" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/json/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="182" column="4" selection-start-line="182" selection-start-column="4" selection-end-line="182" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model/data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="111" column="72" lean-forward="true" selection-start-line="111" selection-start-column="72" selection-end-line="111" selection-end-column="72" />
+        <state relative-caret-position="366">
+          <caret line="171" lean-forward="true" selection-start-line="171" selection-end-line="171" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="105" column="27" lean-forward="true" selection-start-line="105" selection-start-column="27" selection-end-line="105" selection-end-column="27" />
         </state>
       </provider>
     </entry>
