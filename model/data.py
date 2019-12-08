@@ -113,13 +113,16 @@ class SQuAD():
                             # filtered_sentence = [w for w in word_tokens if not w in stop_words]
                             word_tokens = list(filter(lambda token: token not in string.punctuation, word_tokens))
 
-                            filtered_sentence = []
-                            stop_words = set(stopwords.words('english'))
-                            for w in word_tokens:
-                                if w not in stop_words:
-                                    filtered_sentence.append(w)
+                            filtered_sentence = word_tokens
+                            # filtered_sentence = []
+                            # stop_words = set(stopwords.words('english'))
+                            # for w in word_tokens:
+                            #     if w not in stop_words:
+                            #         filtered_sentence.append(w)
 
                             # distributing probability to all gt values
+                            if len(filtered_sentence) == 0:
+                                continue
                             prob = 1/max(1, len(filtered_sentence))
                             gt = [0]*len(tokens)
                             for i in filtered_sentence:

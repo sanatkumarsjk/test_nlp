@@ -23,11 +23,6 @@ def myLossFunction(pred_prob, gt_prob):
     # gt_prob = torch.cuda.FloatTensor(gt_prob)
     gt_prob = torch.FloatTensor(gt_prob)
     print(pred_prob.shape, gt_prob.shape)
-    print("-======================")
-    print(gt_prob)
-    print("-======================")
-    # f = gt_prob > 0
-    # print(f.tolist())
     diff = []
     for index,pp in enumerate(pred_prob):
         d = []
@@ -35,10 +30,7 @@ def myLossFunction(pred_prob, gt_prob):
             g = gt_prob[index][idx]
             if g != 0:
                 d.append(abs(p - g))
-            # else:
-            #     d.append(0)
         diff.append(sum(d))
-    print(diff)
     diff = torch.tensor(diff, requires_grad = True)
 
     # diff = abs(pred_prob - gt_prob)
