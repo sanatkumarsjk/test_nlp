@@ -121,19 +121,21 @@ class SQuAD():
                                 if w not in stop_words:
                                     filtered_sentence.append(w)
 
-                            gt = []
+                            # distributing probability to all gt values
+                            prob = 1/filtered_sentence
+                            gt = [0]*len(tokens)
                             for i in filtered_sentence:
                                 try:
-                                    gt.append(tokens.index(i))
+                                    gt[tokens.index(i)] = prob
                                 except:
                                    # print(i)
                                     pass
-                            if len(gt) == 2:
-                               # print("bogus data found")
-                                gt += [0,0]
-                            else:
-                                pass
-                               # print("normal data found-----------------------------")
+                            # if len(gt) == 2:
+                            #    # print("bogus data found")
+                            #     gt += [0,0]
+                            # else:
+                            #     pass
+                            #    # print("normal data found-----------------------------")
 
                             ##################jk
 
