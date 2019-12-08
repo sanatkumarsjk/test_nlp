@@ -41,8 +41,11 @@ class SQuAD():
         self.LABEL = data.Field(sequential=False, unk_token=None, use_vocab=False)
 
         dict_fields = {'id': ('id', self.RAW),
-                       's_idx': ('s_idx', self.LABEL),
-                       'e_idx': ('e_idx', self.LABEL),
+                       'f_idx': ('f_idx', self.LABEL),
+                       'se_idx': ('se_idx', self.LABEL),
+                       't_idx': ('t_idx', self.LABEL),
+                       'fo_idx': ('fo_idx', self.LABEL),
+                       'fi_idx': ('fi_idx', self.LABEL),
                        'context': [('c_word', self.WORD), ('c_char', self.CHAR)],
                        'question': [('q_word', self.WORD), ('q_char', self.CHAR)]}
 
