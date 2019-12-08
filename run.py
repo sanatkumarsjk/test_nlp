@@ -11,9 +11,26 @@ from model.model import BiDAF
 from model.data import SQuAD
 from model.ema import EMA
 import evaluate
+import torch.nn.functional as F
+import numpy as np
 
+def myLossFunction(pred_prob, gt_prob):
 
-def loss(pred, gt):
+    diff = pred_prob - gt_prob
+    return torch.sqrt(torch.mean(diff))
+
+    # pred = np.random.random((10,10))
+    # pred_pt = torch.from_numpy(pred)
+    # pred_sm = F.softmax(pred_pt, dim=1)
+    # values, indices = pred_sm.max(1)
+    #
+    # gt = np.arange()
+    # # log_prob = -1.0 * F.log_softmax(pred_prob, 1)
+    # loss = pred_prob.gather(1, gt_indexes.unsqueeze(1))
+    # loss = loss.mean()
+    # return loss
+    # print (pred, gt)
+
     return 9.2
 
 def train(args, data):
@@ -49,11 +66,13 @@ def train(args, data):
         print('----------------Calling model---\n\n', 'iteration and epoch number', i, present_epoch)
         #print(batch)
         p1, p2 = model(batch)
-        #print(p1,p2)
+        print("P1 ============= ", p1)
+        print("P2 ============== ",p2)
         optimizer.zero_grad()
-        for i in batch.f_idx:
-            print(i)
-            batch_loss = loss(p1, batch.f_idx) #criterion(p1, batch.s_idx) # + criterion(p1, batch.se_idx) + criterion(p2, batch.t_idx) + criterion(p1, batch.fo_idx) + criterion(p1, batch.fi_idx)
+
+        # for i in batch.f_idx:
+        #     print(i)
+        batch_loss = myLossFunction(p1, batch.f_idx) #criterion(p1, batch.s_idx) # + criterion(p1, batch.se_idx) + criterion(p2, batch.t_idx) + criterion(p1, batch.fo_idx) + criterion(p1, batch.fi_idx)
     
         loss += batch_loss.item()
         batch_loss.backward()
