@@ -24,12 +24,16 @@ import sys
 
 def myLossFunction(pred_prob, gt_prob):
     #padding
-    maxlen = len(max(gt_prob, key=len))
+    maxlen = len(max(pred_prob, key=len))
     for i in range(len(gt_prob)):
-        while len(gt_prob[i]) <= maxlen:
+        while len(gt_prob[i]) < maxlen:
             gt_prob[i].append(0)
     # gt_prob = torch.cuda.FloatTensor(gt_prob)
     gt_prob = torch.FloatTensor(gt_prob)
+    
+    #kl = nn.KLDivLoss(pred_prob, gt_prob)
+   # print(kl,"losss-----------------------------------------------")
+   # return kl
     print(pred_prob.shape, gt_prob.shape)
     diff = []
     for index,pp in enumerate(pred_prob):
@@ -41,7 +45,7 @@ def myLossFunction(pred_prob, gt_prob):
         diff.append(sum(d))
     diff = torch.tensor(diff, requires_grad = True)
 
-    # diff = abs(pred_prob - gt_prob)
+    #diff = abs(pred_prob - gt_prob)
     loss = torch.sqrt(torch.mean(diff))
     print("loss", loss)
     return loss
@@ -77,17 +81,17 @@ def train(args, data):
         if present_epoch > last_epoch:
             print('epoch:', present_epoch + 1)
         last_epoch = present_epoch
-      
-        print('----------------Calling model---\n\n', 'iteration and epoch number', i, present_epoch)
+        #print(batch) 
+        print('\n\n\n\n\n\n\----------------Calling model---\n\n', 'iteration and epoch number', i, present_epoch)
         #print(batch)
         p1, p2 = model(batch)
-        print("P1 ============= ", p1)
-        print("P2 ============== ",p2)
+        #print("P1 ============= ", p1)
+        #print("P2 ============== ",p2)
         optimizer.zero_grad()
 
         # for i in batch.f_idx:
         #     print(i)
-        batch_loss = myLossFunction(p1, batch.f_idx) #criterion(p1, batch.s_idx) # + criterion(p1, batch.se_idx) + criterion(p2, batch.t_idx) + criterion(p1, batch.fo_idx) + criterion(p1, batch.fi_idx)
+        batch_loss = myLossFunction(p1, batch.f_idx)/50 #criterion(p1, batch.s_idx) # + criterion(p1, batch.se_idx) + criterion(p2, batch.t_idx) + criterion(p1, batch.fo_idx) + criterion(p1, batch.fi_idx)
     
         # loss += batch_loss.item()
         batch_loss.backward()
@@ -148,10 +152,12 @@ def test(model, ema, args, data):
             print(p1.shape,'++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
             temp_pred = []
             for i in range(p1.shape[0]):
-                val, ind = torch.topk(p1[i], gt_len[i] )
-                temp_pred.append(tuple(ind.tolist()))
+                print(p[i].shape)
+                val, ind = torch.topk(p1[i],p[i].size )
+                prediction.append(tuple(ind.tolist()))
+            
 
-            prediction.append(tuple( temp_pred))
+            #predictiond( temp_pred)
 #    for i in range(len(gt)):
  #       p =[]
 #      g = []
@@ -198,9 +204,22 @@ def normalize_answer(s):
 def f1_score(prediction, ground_truth):
     prediction_tokens = prediction #normalize_answer(prediction).split()
     ground_truth_tokens = tuple(ground_truth) #normalize_answer(ground_truth).split()
-    print(prediction_tokens)
-    common = Counter(prediction_tokens) & Counter(ground_truth_tokens)
-    num_same = sum(common.values())
+    print(len(prediction))
+    print(len(ground_truth))
+   # common = Counter(prediction_tokens) & Counter(ground_truth_tokens)
+   # print(Counter(prediction_tokens))
+   # print(Counter(ground_truth_tokens))
+    num_same = 0
+    for i in range(len(ground_truth)):
+        print(ground_truth[i])
+        print(prediction[i])
+        print('******************************************************************************')
+        if ground_truth[i] in prediction[i]:
+        
+            num_same +=1
+    
+        print(num_same)
+    #num_same = sum(common.values())
     if num_same == 0:
         return 0
     precision = 1.0 * num_same / len(prediction_tokens)
