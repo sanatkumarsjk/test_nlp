@@ -130,12 +130,12 @@ def test(model, ema, args, data):
 
     with torch.set_grad_enabled(False):
         for batch in iter(data.dev_iter):
-            # print(batch, '\n\n\n')
+           # print(batch.c_word,'\n\n\n')
             p1, p2 = model(batch)
 
             gt_len = []
             for i in batch.f_idx:
-                context.append(batch.context.split())
+                #context.append(batch.context.split())
                 temp_gt = []
                 #print(i,'\n\n\n\n\n\n\n\n\n\n')
                 for j in range(len(i)):
@@ -152,17 +152,17 @@ def test(model, ema, args, data):
                 temp_pred.append(tuple(ind.tolist()))
 
             prediction.append(tuple( temp_pred))
-    for i in range(len(gt)):
-        p =[]
-        g = []
-        for j in range(len(gt[i])):
-            p.append(context[prediction[j]])
-            g.append(context[gt[j]])
-        print("========================================================================================")
-        print("Gt Prediction pair")
-        print(g)
-        print(p)
-        print("========================================================================================\n\n\n\n\n")
+#    for i in range(len(gt)):
+ #       p =[]
+#      g = []
+#        for j in range(len(gt[i])):
+#            p.append(context[prediction[j]])
+#            g.append(context[gt[j]])
+#        print("========================================================================================")
+#        print("Gt Prediction pair")
+#        print(g)
+#        print(p)
+#        print("========================================================================================\n\n\n\n\n")
     f1 = f1_score(prediction, gt)
     print("The f1 score for this-----------------------------------",f1)
     return loss, f1, 0
