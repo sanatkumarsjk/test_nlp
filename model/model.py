@@ -2,8 +2,11 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from utils.nn import LSTM, Linear
+from utils.lstm import LSTM
+from utils.gru import GRU
+from utils.linear import Linear
 
+# In branch elmo, install allennlp using pip.
 
 class BiDAF(nn.Module):
     def __init__(self, args, pretrained):
@@ -61,11 +64,11 @@ class BiDAF(nn.Module):
         self.p2_weight_g = Linear(args.hidden_size * 8, 1, dropout=args.dropout)
         self.p2_weight_m = Linear(args.hidden_size * 2, 1, dropout=args.dropout)
 
-        self.output_LSTM = LSTM(input_size=args.hidden_size * 2,
-                                hidden_size=args.hidden_size,
-                                bidirectional=True,
-                                batch_first=True,
-                                dropout=args.dropout)
+        self.output_GRU = GRU(input_size=args.hidden_size * 2,
+                              hidden_size=args.hidden_size,
+                              bidirectional=True,
+                              batch_first=True,
+                              dropout=args.dropout)
 
         self.dropout = nn.Dropout(p=args.dropout)
 
@@ -164,7 +167,7 @@ class BiDAF(nn.Module):
             # (batch, c_len)
             p1 = (self.p1_weight_g(g) + self.p1_weight_m(m)).squeeze()
             # (batch, c_len, hidden_size * 2)
-            m2 = self.output_LSTM((m, l))[0]
+            m2 = self.output_GRU((m, l))[0]
             # (batch, c_len)
             p2 = (self.p2_weight_g(g) + self.p2_weight_m(m2)).squeeze()
 
