@@ -14,7 +14,6 @@ import evaluate
 import torch.nn.functional as F
 import numpy as np
 
-from __future__ import print_function
 from collections import Counter
 import string
 import re
@@ -122,8 +121,8 @@ def train(args, data):
         #     loss = 0
         #     model.train()
     #sk
-    #dev_loss, dev_exact, dev_f1 = test(model, ema, args, data)
-    #print(dev_loss, dev_exact, dev_f1)
+    dev_loss, dev_exact, dev_f1 = test(model, ema, args, data)
+    print(dev_loss, dev_exact, dev_f1)
     writer.close()
     print(f'max dev EM: {max_dev_exact:.3f} / max dev F1: {max_dev_f1:.3f}')
 
@@ -151,10 +150,30 @@ def test(model, ema, args, data):
             # print(batch, '\n\n\n')
             p1, p2 = model(batch)
 
-            values, indices = p1.max(0)
-            print(indices)
-            prediction.append(indices)
-            gt.append(batch.f_idx)
+            gt_len = []
+            for i in batch.f_idx:
+                temp_gt = []
+                #print(i,'\n\n\n\n\n\n\n\n\n\n')
+                for j in range(len(i)):
+                    if i[j] !=0:
+                    
+                        temp_gt.append(j)
+                gt_len.append(len(temp_gt))    
+                gt.append(tuple(temp_gt))
+            
+            print(p1.shape,'++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+            temp_pred = []
+            for i in range(p1.shape[0]):
+                val, ind = torch.topk(p1[i], gt_len[i] )
+                temp_pred.append(tuple(ind.tolist()))
+
+
+            #indices = p1.max(0)[1]
+            #print(batch.f_idx,temp_pred))
+           # print("-----------",temp_pred,"\n\n")
+            #print(batch.f_idx)
+            prediction.append(tuple( temp_pred))
+            
             #batch_loss = myLossFunction(p1, batch.f_idx) # + criterion(p1, batch.se_idx) + criterion(p1, batch.t_idx) + criterion(p1, batch.fo_idx) + criterion(p1, batch.fi_idx)
 
             # batch_loss = criterion(p1, batch.s_idx) + criterion(p2, batch.e_idx)
@@ -184,6 +203,7 @@ def test(model, ema, args, data):
 
     # results = evaluate.main(args)
     f1 = f1_score(prediction, gt)
+    print("The f1 score for this-----------------------------------",f1)
     return loss, f1, 0 #, results['exact_match'], results['f1']
 
 
@@ -208,8 +228,9 @@ def normalize_answer(s):
 
 
 def f1_score(prediction, ground_truth):
-    prediction_tokens = normalize_answer(prediction).split()
-    ground_truth_tokens = normalize_answer(ground_truth).split()
+    prediction_tokens = tuple(prediction) #normalize_answer(prediction).split()
+    ground_truth_tokens = tuple(ground_truth) #normalize_answer(ground_truth).split()
+    print(prediction_tokens)
     common = Counter(prediction_tokens) & Counter(ground_truth_tokens)
     num_same = sum(common.values())
     if num_same == 0:
