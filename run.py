@@ -102,24 +102,6 @@ def train(args, data):
         model.train()
         #break
 
-        # if (i + 1) % args.print_freq == 0 or True:
-        #     dev_loss, dev_exact, dev_f1 = test(model, ema, args, data)
-        #     c = (i + 1) // args.print_freq
-        #
-        #     writer.add_scalar('loss/train', loss, c)
-        #     writer.add_scalar('loss/dev', dev_loss, c)
-        #     writer.add_scalar('exact_match/dev', dev_exact, c)
-        #     writer.add_scalar('f1/dev', dev_f1, c)
-        #     print(f'train loss: {loss:.3f} / dev loss: {dev_loss:.3f}'
-        #           f' / dev EM: {dev_exact:.3f} / dev F1: {dev_f1:.3f}')
-        #
-        #     if dev_f1 > max_dev_f1:
-        #         max_dev_f1 = dev_f1
-        #         max_dev_exact = dev_exact
-        #         best_model = copy.deepcopy(model)
-        #
-        #     loss = 0
-        #     model.train()
     #sk
     dev_loss, dev_exact, dev_f1 = test(model, ema, args, data)
     print(dev_loss, dev_exact, dev_f1)
@@ -130,7 +112,6 @@ def train(args, data):
 
 
 def test(model, ema, args, data):
-    #torch.cuda.empty_cache()
     device = torch.device(f"cuda:{args.gpu}" if torch.cuda.is_available() else "cpu")
     #device =  "cpu"
     criterion = nn.CrossEntropyLoss()
@@ -144,7 +125,9 @@ def test(model, ema, args, data):
             backup_params.register(name, param.data)
             param.data.copy_(ema.get(name))
     prediction  = []
+    context = []
     gt = []
+
     with torch.set_grad_enabled(False):
         for batch in iter(data.dev_iter):
             # print(batch, '\n\n\n')
@@ -152,6 +135,7 @@ def test(model, ema, args, data):
 
             gt_len = []
             for i in batch.f_idx:
+                context.append(batch.context.split())
                 temp_gt = []
                 #print(i,'\n\n\n\n\n\n\n\n\n\n')
                 for j in range(len(i)):
@@ -167,44 +151,28 @@ def test(model, ema, args, data):
                 val, ind = torch.topk(p1[i], gt_len[i] )
                 temp_pred.append(tuple(ind.tolist()))
 
-
-            #indices = p1.max(0)[1]
-            #print(batch.f_idx,temp_pred))
-           # print("-----------",temp_pred,"\n\n")
-            #print(batch.f_idx)
             prediction.append(tuple( temp_pred))
-            
-            #batch_loss = myLossFunction(p1, batch.f_idx) # + criterion(p1, batch.se_idx) + criterion(p1, batch.t_idx) + criterion(p1, batch.fo_idx) + criterion(p1, batch.fi_idx)
-
-            # batch_loss = criterion(p1, batch.s_idx) + criterion(p2, batch.e_idx)
-            #loss += batch_loss.item()
-
-            # (batch, c_len, c_len)
-    #         batch_size, c_len = p1.size()
-    #         ls = nn.LogSoftmax(dim=1)
-    #         mask = (torch.ones(c_len, c_len) * float('-inf')).to(device).tril(-1).unsqueeze(0).expand(batch_size, -1, -1)
-    #         score = (ls(p1).unsqueeze(2) + ls(p2).unsqueeze(1)) + mask
-    #         score, s_idx = score.max(dim=1)
-    #         score, e_idx = score.max(dim=1)
-    #         s_idx = torch.gather(s_idx, 1, e_idx.view(-1, 1)).squeeze()
-    #
-    #         for i in range(batch_size):
-    #             id = batch.id[i]
-    #             answer = batch.c_word[0][i][s_idx[i]:e_idx[i]+1]
-    #             answer = ' '.join([data.WORD.vocab.itos[idx] for idx in answer])
-    #             answers[id] = answer
-    #
-    #     for name, param in model.named_parameters():
-    #         if param.requires_grad:
-    #             param.data.copy_(backup_params.get(name))
-    #
-    # with open(args.prediction_file, 'w', encoding='utf-8') as f:
-    #     print(json.dumps(answers), file=f)
-
-    # results = evaluate.main(args)
+    for i in range(len(gt)):
+        p =[]
+        g = []
+        for j in range(len(gt[i])):
+            p.append(context[prediction[j]])
+            g.append(context[gt[j]])
+        print("========================================================================================")
+        print("Gt Prediction pair")
+        print(g)
+        print(p)
+        print("========================================================================================\n\n\n\n\n")
     f1 = f1_score(prediction, gt)
     print("The f1 score for this-----------------------------------",f1)
-    return loss, f1, 0 #, results['exact_match'], results['f1']
+    return loss, f1, 0
+
+
+
+
+
+
+
 
 
 def normalize_answer(s):
@@ -228,7 +196,7 @@ def normalize_answer(s):
 
 
 def f1_score(prediction, ground_truth):
-    prediction_tokens = tuple(prediction) #normalize_answer(prediction).split()
+    prediction_tokens = prediction #normalize_answer(prediction).split()
     ground_truth_tokens = tuple(ground_truth) #normalize_answer(ground_truth).split()
     print(prediction_tokens)
     common = Counter(prediction_tokens) & Counter(ground_truth_tokens)

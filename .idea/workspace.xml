@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="82a31b74-859b-4791-acd7-bd364d15f320" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helper.txt" beforeDir="false" afterPath="$PROJECT_DIR$/helper.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/data.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -36,28 +34,28 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="732" />
-          <entry key="txt" value="417" />
+          <entry key="py" value="1205" />
+          <entry key="txt" value="433" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="417" />
-          <entry key="Python" value="732" />
+          <entry key="PLAIN_TEXT" value="433" />
+          <entry key="Python" value="1205" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="json" value="5" />
           <entry key="py" value="12" />
-          <entry key="txt" value="2" />
+          <entry key="txt" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JSON" value="1" />
           <entry key="JSON5" value="4" />
-          <entry key="PLAIN_TEXT" value="2" />
+          <entry key="PLAIN_TEXT" value="3" />
           <entry key="Python" value="12" />
         </counts>
       </usages-collector>
@@ -68,8 +66,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data_preprocess/generate_json.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="28" selection-start-line="28" selection-end-line="28" />
+            <state relative-caret-position="668">
+              <caret line="57" column="13" selection-start-line="56" selection-start-column="14" selection-end-line="57" selection-end-column="13" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -92,8 +90,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/model/data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="115" column="35" selection-start-line="115" selection-start-column="35" selection-end-line="115" selection-end-column="35" />
+            <state relative-caret-position="332">
+              <caret line="178" column="89" lean-forward="true" selection-start-line="178" selection-start-column="89" selection-end-line="178" selection-end-column="89" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -104,8 +102,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/run.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="153" column="37" lean-forward="true" selection-start-line="153" selection-start-column="37" selection-end-line="153" selection-end-column="37" />
+            <state relative-caret-position="365">
+              <caret line="162" column="14" selection-start-line="162" selection-start-column="14" selection-end-line="162" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -113,7 +111,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/evaluate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
+            <state relative-caret-position="-585">
               <caret line="1" selection-start-line="1" selection-end-line="27" />
               <folding>
                 <element signature="e#92#129#0" expanded="true" />
@@ -123,19 +121,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/helper.txt">
+        <entry file="file://$PROJECT_DIR$/data_preprocess/split_train_dev_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="20" />
+            <state relative-caret-position="255">
+              <caret line="15" column="38" selection-start-line="15" selection-start-column="38" selection-end-line="15" selection-end-column="38" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data_preprocess/split_train_dev_test.py">
+        <entry file="file://$PROJECT_DIR$/helper.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="38" selection-start-line="15" selection-start-column="38" selection-end-line="15" selection-end-column="38" />
+            <state relative-caret-position="136">
+              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="19" />
             </state>
           </provider>
         </entry>
@@ -164,9 +162,9 @@
       <list>
         <option value="$PROJECT_DIR$/data_preprocess/data.py" />
         <option value="$PROJECT_DIR$/data_preprocess/split_train_dev_test.py" />
-        <option value="$PROJECT_DIR$/data_preprocess/generate_json.py" />
         <option value="$PROJECT_DIR$/model/data.py" />
         <option value="$PROJECT_DIR$/helper.txt" />
+        <option value="$PROJECT_DIR$/data_preprocess/generate_json.py" />
         <option value="$PROJECT_DIR$/run.py" />
       </list>
     </option>
@@ -228,9 +226,6 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="UPDATED" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/.gitignore</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/data_preprocess/generate_json.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/model/data.py</PATH>
           <PATH vcs="Git" revision="">$PROJECT_DIR$/run.py</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
@@ -413,7 +408,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575834902724</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="f1 score added.">
+      <created>1575852862832</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1575852862832</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -471,7 +473,8 @@
     <MESSAGE value="top words dependencies resolved in data.py" />
     <MESSAGE value="custom loss function added" />
     <MESSAGE value="gt converted to prob dist" />
-    <option name="LAST_COMMIT_MESSAGE" value="gt converted to prob dist" />
+    <MESSAGE value="f1 score added." />
+    <option name="LAST_COMMIT_MESSAGE" value="f1 score added." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -496,16 +499,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data_preprocess/data.py" />
-    <entry file="file://$PROJECT_DIR$/data_preprocess/generate_json.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model/ema.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -523,6 +516,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/evaluate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-585">
+          <caret line="1" selection-start-line="1" selection-end-line="27" />
+          <folding>
+            <element signature="e#92#129#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_preprocess/generate_json.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="668">
+          <caret line="57" column="13" selection-start-line="56" selection-start-column="14" selection-end-line="57" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/model/model.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="410">
@@ -535,35 +548,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/helper.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="20" />
+        <state relative-caret-position="136">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model/data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="115" column="35" selection-start-line="115" selection-start-column="35" selection-end-line="115" selection-end-column="35" />
+        <state relative-caret-position="332">
+          <caret line="178" column="89" lean-forward="true" selection-start-line="178" selection-start-column="89" selection-end-line="178" selection-end-column="89" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/evaluate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="27" />
-          <folding>
-            <element signature="e#92#129#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/run.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="153" column="37" lean-forward="true" selection-start-line="153" selection-start-column="37" selection-end-line="153" selection-end-column="37" />
+        <state relative-caret-position="365">
+          <caret line="162" column="14" selection-start-line="162" selection-start-column="14" selection-end-line="162" selection-end-column="14" />
         </state>
       </provider>
     </entry>
