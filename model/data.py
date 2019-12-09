@@ -165,7 +165,7 @@ class SQuAD():
                                 if l >= e_idx:
                                     e_idx = i
                                     break
-                            if len(gt) > 1:
+                            if len(gt) > 0 :
                                 dump.append(dict([('id', id),
                                                 ('context', context),
                                                 ('question', question),
