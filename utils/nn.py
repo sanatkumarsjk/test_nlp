@@ -2,11 +2,11 @@ import torch
 import torch.nn as nn
 
 
-class LSTM(nn.Module):
+class RNN(nn.Module):
     def __init__(self, input_size, hidden_size, batch_first=False, num_layers=1, bidirectional=False, dropout=0.2):
-        super(LSTM, self).__init__()
+        super(RNN, self).__init__()
 
-        self.rnn = nn.LSTM(input_size=input_size,
+        self.rnn = nn.GRU(input_size=input_size,
                            hidden_size=hidden_size,
                            num_layers=num_layers,
                            bidirectional=bidirectional,
@@ -42,7 +42,6 @@ class LSTM(nn.Module):
 
         x = nn.utils.rnn.pad_packed_sequence(x_packed, batch_first=True)[0]
         x = x.index_select(dim=0, index=x_ori_idx)
-        h = h.permute(1, 0, 2).contiguous().view(-1, h.size(0) * h.size(2)).squeeze()
         h = h.index_select(dim=0, index=x_ori_idx)
 
         return x, h
